@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
@@ -129,7 +130,7 @@ class SwipeControlsOverlayLayout(
             visibility = GONE // Initially hidden.
         }
 
-        // Initialize vertical progress bar for brightness (right side).
+        // Initialize vertical progress bar for brightness (left side).
         verticalBrightnessProgressView = VerticalProgressView(
             context,
             config.overlayBackgroundOpacity,
@@ -141,14 +142,14 @@ class SwipeControlsOverlayLayout(
         ).apply {
             layoutParams =
                 LayoutParams(40f.toDisplayPixels().toInt(), 150f.toDisplayPixels().toInt()).apply {
-                    addRule(ALIGN_PARENT_RIGHT)
-                    rightMargin = 40f.toDisplayPixels().toInt()
+                    addRule(ALIGN_PARENT_LEFT)
+                    leftMargin = 40f.toDisplayPixels().toInt()
                     addRule(CENTER_VERTICAL)
                 }
             visibility = GONE // Initially hidden.
         }
 
-        // Initialize vertical progress bar for volume (left side).
+        // Initialize vertical progress bar for volume (right side).
         verticalVolumeProgressView = VerticalProgressView(
             context,
             config.overlayBackgroundOpacity,
@@ -160,8 +161,8 @@ class SwipeControlsOverlayLayout(
         ).apply {
             layoutParams =
                 LayoutParams(40f.toDisplayPixels().toInt(), 150f.toDisplayPixels().toInt()).apply {
-                    addRule(ALIGN_PARENT_LEFT)
-                    leftMargin = 40f.toDisplayPixels().toInt()
+                    addRule(ALIGN_PARENT_RIGHT)
+                    rightMargin = 40f.toDisplayPixels().toInt()
                     addRule(CENTER_VERTICAL)
                 }
             visibility = GONE // Initially hidden.
@@ -792,7 +793,7 @@ class VerticalProgressView(
 
     private val iconSize = 20f.toDisplayPixels()
     private val padding = 12f.toDisplayPixels()
-    private val progressBarWidth = 3f.toDisplayPixels()
+    private val progressBarWidth = 5f.toDisplayPixels()
     private val progressBarHeight: Float = resources.displayMetrics.widthPixels / 3f
 
     init {
@@ -800,6 +801,8 @@ class VerticalProgressView(
         progressPaint.strokeCap = Paint.Cap.BUTT
         progressPaint.style = Paint.Style.FILL
         fillBackgroundPaint.style = Paint.Style.FILL
+        progressPaint.color = Color.WHITE[span_3](start_span)[span_3](end_span)
+        fillBackgroundPaint.color = 0x66FFFFFF.toInt()[span_4](start_span)[span_4](end_span)
     }
 
     /**
@@ -832,17 +835,11 @@ class VerticalProgressView(
         val viewWidth = width.toFloat()
         val viewHeight = height.toFloat()
         val viewWidthHalf = viewWidth / 2
-        val cornerRadius = viewWidthHalf
 
         val startY = padding
         val iconEndY = startY + iconSize
 
         val textStartY = viewHeight - padding - textPaint.textSize / 2
-
-        canvas.drawRoundRect(
-            0f, 0f, viewWidth, viewHeight,
-            cornerRadius, cornerRadius, backgroundPaint
-        )
 
         icon?.let {
             val iconX = viewWidthHalf - iconSize / 2
@@ -855,13 +852,9 @@ class VerticalProgressView(
             it.draw(canvas)
         }
 
-        val textX = viewWidthHalf
-        textPaint.textAlign = Paint.Align.CENTER
-        canvas.drawText(displayText, textX, textStartY, textPaint)
-
         if (!isMinimalStyle) {
             val progressStartY = (iconEndY + padding)
-            val progressEndY = textStartY - textPaint.textSize - padding
+            val progressEndY = viewHeight - padding[span_5](start_span)[span_5](end_span)
             val progressHeight = progressEndY - progressStartY
 
             if (progressHeight > 50) {
