@@ -121,7 +121,10 @@ public final class ShortsShelfFilter extends Filter {
         final NavigationButton navigationButton = NavigationButton.getSelectedNavigationButton();
         final String navigation = navigationButton == null ? "null" : navigationButton.name();
         final String browseId = RootView.getBrowseId();
-        final boolean hideShelves = shouldHideShortsFeedItems(playerActive, descriptionActive, searchBarActive, navigationButton, browseId);
+        final boolean isPortrait = android.content.res.Resources.getSystem()
+        .getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT;
+final boolean hideShelves = isPortrait
+        && shouldHideShortsFeedItems(playerActive, descriptionActive, searchBarActive, navigationButton, browseId);
         Logger.printDebug(() -> "hideShelves: " + hideShelves +
                 "\nplayerActive: " + playerActive +
                 "\ndescriptionActive: " + descriptionActive +
