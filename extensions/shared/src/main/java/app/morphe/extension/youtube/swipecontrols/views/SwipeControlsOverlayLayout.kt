@@ -801,8 +801,8 @@ class VerticalProgressView(
         progressPaint.strokeCap = Paint.Cap.BUTT
         progressPaint.style = Paint.Style.FILL
         fillBackgroundPaint.style = Paint.Style.FILL
-        progressPaint.color = Color.WHITE[span_3](start_span)[span_3](end_span)
-        fillBackgroundPaint.color = 0x66FFFFFF.toInt()[span_4](start_span)[span_4](end_span)
+        progressPaint.color = Color.WHITE
+        fillBackgroundPaint.color = 0x66FFFFFF.toInt()
     }
 
     /**
@@ -854,7 +854,7 @@ class VerticalProgressView(
 
         if (!isMinimalStyle) {
             val progressStartY = (iconEndY + padding)
-            val progressEndY = viewHeight - padding[span_5](start_span)[span_5](end_span)
+            val progressEndY = viewHeight - padding
             val progressHeight = progressEndY - progressStartY
 
             if (progressHeight > 50) {
